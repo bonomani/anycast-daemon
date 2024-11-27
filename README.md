@@ -1,41 +1,34 @@
-Here’s a sample `README.md` file for your Anycast Daemon application:
+# Anycast Daemon Installation
 
----
-
-# Anycast Daemon
-
-**Anycast Daemon** is a Perl-based application designed to monitor and manage anycast services, gateways, and network processes. It utilizes configuration files and integrates with tools like `dpinger` for monitoring, Xymon for notifications, and system utilities for managing routing states.
+**Anycast Daemon** is a Perl-based application designed for monitoring and managing anycast services. This guide explains how to install and configure the application using the provided `install.sh` script.
 
 ---
 
 ## Features
-
-- **Gateway Monitoring**: Monitors multiple gateways and reports their operational status.
-- **Service Monitoring**: Checks processes and ports, ensuring critical services are running.
-- **Routing Management**: Manages routing configurations (e.g., OSPF) based on monitoring results.
-- **Integration with Xymon**: Sends alerts and notifications to a configured Xymon server.
-- **Customizable**: Configurable through YAML files for flexibility and scalability.
+- **Service Monitoring**: Monitors processes and ports for defined services.
+- **Gateway Monitoring**: Uses `dpinger` to check gateway reachability.
+- **Routing Management**: Automates OSPF configurations based on monitoring results.
+- **Xymon Integration**: Reports statuses to a Xymon server.
+- **Systemd Service**: Configured as a persistent systemd service.
 
 ---
 
-## Requirements
+## Installation
 
-### Software Dependencies
+### Prerequisites
+Ensure the following are installed:
 - **Perl** (v5.10+)
 - Perl Modules:
   - `FindBin`
   - `YAML::XS`
   - `JSON`
-  - `File::Slurp`
 - **dpinger**: For gateway monitoring.
 - **Xymon**: For status reporting.
-- System utilities:
-  - `pgrep`
-  - `vtysh`
+- System utilities: `pgrep`, `vtysh`.
 
 ---
 
-## Installation
+### Installation Steps
 
 1. **Clone the Repository**
    ```bash
@@ -43,38 +36,59 @@ Here’s a sample `README.md` file for your Anycast Daemon application:
    cd /opt/anycast
    ```
 
-2. **Run the Installer**
+2. **Update `install.sh` with Desired Paths**
+   The `install.sh` script allows customization of key installation paths:
+   - **Static Base Directory (`STATIC_BASE_DIR`)**: Where application files are stored.
+   - **Runtime Base Directory (`RUNTIME_BASE_DIR`)**: For runtime files like logs and status files.
+   - **Configuration Directory (`CONFIG_DIR`)**: Location for configuration files.
+   - **Log Directory (`LOG_DIR`)**: Path for log storage.
+
+   Edit the script to adjust these paths as needed:
+   ```bash
+   nano install.sh
+   ```
+
+   Example default configuration in `install.sh`:
+   ```bash
+   STATIC_BASE_DIR="/opt/anycast"
+   RUNTIME_BASE_DIR="/opt/anycast/var"
+   CONFIG_DIR="/etc/anycast"
+   LOG_DIR="/var/log/anycast"
+   ```
+
+   Modify these paths if your setup requires different directories.
+
+3. **Run the Installation Script**
+   After updating paths, execute the script:
    ```bash
    sudo bash install.sh
    ```
 
-   This script will:
-   - Install required files in `/opt/anycast`.
-   - Set up configuration in `/etc/anycast/config.yml`.
-   - Create a systemd service for the daemon.
+   This will:
+   - Create necessary directories.
+   - Copy library files (`lib`) to `/opt/anycast/lib`.
+   - Configure a systemd service (`anycast.service`).
+   - Start the service.
 
-3. **Start the Service**
+4. **Verify the Service**
+   Check the service status:
    ```bash
-   sudo systemctl start anycast.service
-   ```
-
-4. **Enable the Service at Boot**
-   ```bash
-   sudo systemctl enable anycast.service
+   sudo systemctl status anycast.service
    ```
 
 ---
 
 ## Configuration
 
-The application is configured through `/etc/anycast/config.yml`. Below is a sample configuration:
+The application configuration is located at `/etc/anycast/config.yml`. Below is an example:
 
 ```yaml
-name: "global_monitor"
-log_level: "DEBUG"
 static_base_dir: "/opt/anycast"
 runtime_base_dir: "/opt/anycast/var"
 state_file: "{{ runtime_base_dir }}/anycast_status.json"
+log_level: "DEBUG"
+log_file: "/var/log/anycast/anycast_daemon.log"
+interval: 10
 
 dpinger:
   exec_path: "/usr/local/bin/dpinger"
@@ -87,24 +101,32 @@ controllers:
         - name: "gateway1"
           type: "gateway"
           ip: "192.168.1.3"
+        - name: "postfix"
+          type: "process"
 ```
 
 ---
 
 ## Usage
 
-### Check Service Status
-```bash
-sudo systemctl status anycast.service
-```
+### Start and Stop the Service
+- **Start the Service**:
+  ```bash
+  sudo systemctl start anycast.service
+  ```
+- **Stop the Service**:
+  ```bash
+  sudo systemctl stop anycast.service
+  ```
 
 ### View Logs
+Logs are stored in `/var/log/anycast/anycast_daemon.log`:
 ```bash
 tail -f /var/log/anycast/anycast_daemon.log
 ```
 
-### Test the Application
-Run the daemon manually:
+### Test the Daemon
+Run the daemon manually for testing:
 ```bash
 perl /opt/anycast/anycast_daemon.pl
 ```
@@ -113,16 +135,26 @@ perl /opt/anycast/anycast_daemon.pl
 
 ## Contributing
 
-1. Fork the repository.
-2. Create a new branch:
+1. **Fork the Repository**:
+   ```bash
+   git clone git@github.com:bonomani/anycast-daemon.git
+   cd anycast-daemon
+   ```
+
+2. **Create a Feature Branch**:
    ```bash
    git checkout -b feature-name
    ```
-3. Make your changes and commit them:
+
+3. **Commit Your Changes**:
    ```bash
    git commit -m "Description of changes"
    ```
-4. Push to your fork and submit a pull request.
+
+4. **Push and Submit a Pull Request**:
+   ```bash
+   git push origin feature-name
+   ```
 
 ---
 
@@ -132,11 +164,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## Author
-
-**Bonomani**  
-Feel free to reach out for support or questions about this project.
-
----
-
-You can adjust or expand this `README.md` file as needed based on specific project requirements or additional features. Let me know if you'd like to add anything!
+Let me know if additional details are required!
