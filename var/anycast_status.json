@@ -1,0 +1,138 @@
+{
+   "elements" : [
+      {
+         "elements" : [
+            {
+               "elements" : [
+                  {
+                     "elements" : [
+                        {
+                           "ip" : "192.168.1.3",
+                           "last_changed" : 1732701347,
+                           "latency" : 0,
+                           "loss_percent" : "100",
+                           "name" : "gateway1",
+                           "status" : "0",
+                           "status_message" : "is unreachable",
+                           "type" : "gateway"
+                        },
+                        {
+                           "ip" : "8.8.8.8",
+                           "last_changed" : 1732710526,
+                           "latency" : 12.36,
+                           "loss_percent" : "7",
+                           "name" : "gateway2",
+                           "status" : "1",
+                           "status_message" : "is reachable",
+                           "type" : "gateway"
+                        }
+                     ],
+                     "last_changed" : 1732710526,
+                     "name" : "Gateway Group 1",
+                     "operator" : "any",
+                     "status" : "1",
+                     "status_message" : "is operational",
+                     "type" : "group"
+                  },
+                  {
+                     "elements" : [
+                        {
+                           "elements" : [
+                              {
+                                 "last_changed" : 1732701347,
+                                 "name" : "systemd-resolve",
+                                 "status" : "1",
+                                 "status_message" : "is running",
+                                 "type" : "process"
+                              },
+                              {
+                                 "last_changed" : 1732701347,
+                                 "name" : "snapd",
+                                 "status" : "1",
+                                 "status_message" : "is running",
+                                 "type" : "process"
+                              }
+                           ],
+                           "last_changed" : 1732701347,
+                           "name" : "postfix",
+                           "operator" : "all",
+                           "status" : "1",
+                           "status_message" : "is operational",
+                           "type" : "group"
+                        },
+                        {
+                           "elements" : [
+                              {
+                                 "last_changed" : 1732701347,
+                                 "name" : "nginx",
+                                 "status" : "0",
+                                 "status_message" : "is stopped or has issues",
+                                 "type" : "process"
+                              },
+                              {
+                                 "address" : "0.0.0.0",
+                                 "last_changed" : 1732701347,
+                                 "name" : "nginx port 80",
+                                 "port" : "80",
+                                 "protocol" : "tcp",
+                                 "status" : "0",
+                                 "status_message" : "is closed",
+                                 "type" : "port"
+                              },
+                              {
+                                 "address" : "::",
+                                 "last_changed" : 1732701347,
+                                 "name" : "nginx port 443",
+                                 "port" : "443",
+                                 "protocol" : "tcp",
+                                 "status" : "0",
+                                 "status_message" : "is closed",
+                                 "type" : "port"
+                              }
+                           ],
+                           "last_changed" : 1732701347,
+                           "name" : "nginx process and port",
+                           "operator" : "all",
+                           "status" : "0",
+                           "status_message" : "is not operational",
+                           "type" : "group"
+                        }
+                     ],
+                     "last_changed" : 1732701347,
+                     "name" : "Service Group 1",
+                     "operator" : "all",
+                     "status" : "0",
+                     "status_message" : "is not operational",
+                     "type" : "group"
+                  }
+               ],
+               "last_changed" : 1732701347,
+               "name" : "Anycast group 1",
+               "operator" : "all",
+               "status" : "0",
+               "status_message" : "is not operational",
+               "type" : "group"
+            },
+            {
+               "last_changed" : 1732701347,
+               "name" : "Routing Engine for Controller 1",
+               "status" : "1",
+               "status_message" : "is operational",
+               "type" : "routing"
+            }
+         ],
+         "last_changed" : 1732701347,
+         "name" : "Controller 1",
+         "operator" : "all",
+         "status" : "0",
+         "status_message" : "is not operational",
+         "type" : "group"
+      }
+   ],
+   "last_changed" : 1732701347,
+   "name" : "global",
+   "operator" : "all",
+   "status" : "0",
+   "status_message" : "is not operational",
+   "type" : "group"
+}
