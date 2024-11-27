@@ -2,8 +2,8 @@
 
 # Variables
 SERVICE_NAME="anycast.service"
-STATIC_BASE_DIR="/opt/anycast4"  # For static files
-RUNTIME_BASE_DIR="/opt/anycast4/var" # For runtime/dynamic files
+STATIC_BASE_DIR="/opt/anycast"  # For static files
+RUNTIME_BASE_DIR="/opt/anycast/var" # For runtime/dynamic files
 CONFIG_DIR="/etc/anycast"  # Configuration directory
 LOG_DIR="/var/log/anycast" # Log directory
 LIB_DIR_SRC="lib"  # Source lib directory
